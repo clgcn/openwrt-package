@@ -1,0 +1,15 @@
+{
+  "admin/services/vlmcsd": {
+    "title": "KMS",
+    "order": 90,
+    "action": {
+      "type": "cbi",
+      "path": "vlmcsd"
+    },
+    "depends": {
+      "acl": [
+        "luci-app-vlmcsd"
+      ]
+    }
+  }
+}
