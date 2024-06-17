@@ -1,0 +1,12 @@
+{
+	"admin/services/nfs": {
+		"title": "NFS Manage",
+		"action": {
+			"type": "view",
+			"path": "nfs"
+		},
+		"depends": {
+			"uci": { "nfs": true }
+		}
+	}
+}

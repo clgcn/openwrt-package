@@ -11,9 +11,9 @@ function fileExists(path) {
 }
 
 // Function to reload NFS services after configuration changes
-function reloadNFS() {
-  return shell.run('/etc/init.d/nfs reload');
-}
+// function reloadNFS() {
+//   return shell.run('/etc/init.d/nfs reload');
+// }
 
 return view.extend({
   load: function() {
@@ -36,7 +36,6 @@ return view.extend({
     s = m.section(form.TypedSection, "share", translate("Shared Directories"));
     s.anonymous = true;
     s.addremove = true;
-    s.template = "cbi/tblsection";
 
     o = s.option(form.Flag, "enabled", translate("Enable"));
     o.rmempty = false;
@@ -61,7 +60,6 @@ return view.extend({
     c = m.section(form.TypedSection, "mount", translate("Mounted Points"));
     c.anonymous = true;
     c.addremove = true;
-    c.template = "cbi/tblsection";
 
     o = c.option(form.Flag, "enabled", translate("Enable"));
     o.default = "1";
@@ -91,13 +89,6 @@ return view.extend({
     if (fileExists('/etc/config/fstab')) {
       o.get('path').titleref = luci.dispatcher.build_url("admin", "system", "fstab");
       o.get('target').titleref = luci.dispatcher.build_url("admin", "system", "fstab");
-    }
-
-    var apply = form.value('cbi.apply');
-    if (apply) {
-      return reloadNFS().then(function() {
-        return m.render();
-      });
     }
 
     return m.render();
