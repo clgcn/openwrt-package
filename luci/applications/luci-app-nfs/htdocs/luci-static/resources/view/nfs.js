@@ -6,31 +6,15 @@
 'require view';
 'require fs';
 
-// Function to check if a file exists
-function fileExists(path) {
-  return fs.access(path, fs.F_OK);
-}
-
-// Function to reload NFS services after configuration changes
-// function reloadNFS() {
-//   return shell.run('/etc/init.d/nfs reload');
-// }
-
 return view.extend({
-  load: function() {
-    return Promise.all([
-      uci.load('nfs'),
-    ]);
-  },
-
+	load: function() {
+		return Promise.all([
+			L.resolveDefault(fs.stat('/etc/config/fstab'), null),
+			L.resolveDefault(fs.stat('/etc/config/nfs'), {}),
+		]);
+	},
   render: function(data) {
     var m, s, o;
-
-    // Check if /etc/config/nfs exists
-    if (!fileExists('/etc/config/nfs')) {
-      return E('div', {}, _('NFS configuration not found.'));
-    }
-
     m = new form.Map('nfs', _('NFS Manage'));
 
     // -- NFS Share --
@@ -85,12 +69,6 @@ return view.extend({
     o.placeholder = "5";
     o.rmempty = false;
     o.optional = false;
-
-    // Set title references for path and target options if /etc/config/fstab exists
-    if (fileExists('/etc/config/fstab')) {
-      o.get('path').titleref = luci.dispatcher.build_url("admin", "system", "fstab");
-      o.get('target').titleref = luci.dispatcher.build_url("admin", "system", "fstab");
-    }
 
     return m.render();
   },
