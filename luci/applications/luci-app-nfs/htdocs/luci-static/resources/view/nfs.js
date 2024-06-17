@@ -4,6 +4,7 @@
 'require rpc';
 'require uci';
 'require view';
+'require fs';
 
 // Function to check if a file exists
 function fileExists(path) {
