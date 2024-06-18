@@ -14,7 +14,7 @@ return view.extend({
 		]);
 	},
   render: function(data) {
-    var m, s, o;
+    var m, s, o, c;
     m = new form.Map('nfs', _('NFS Manage'));
 
     // -- NFS Share --
